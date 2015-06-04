@@ -1,0 +1,102 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include <QFileDialog>
+#include <QDebug>
+#include <QFile>
+#include "renderarea.h"
+
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+    qApp->setStyle("fusion");
+    this->renderArea = new RenderArea();
+    ui->gridLayout->addWidget(this->renderArea,0,0);
+    qDebug()<<ui->gridLayout->maximumSize().width();
+    this->QuickSort=new QuickSortArray();
+
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+    delete renderArea;
+}
+
+void MainWindow::Fill()
+{
+    for(int j=0;j<this->QuickSort->GetSize();j++)
+    {
+        switch (j) {
+        case 0:
+            ui->le_element1->setText(QString::number(QuickSort->Get(j)));
+            break;
+        case 1:
+            ui->le_element2->setText(QString::number(QuickSort->Get(j)));
+            break;
+        case 2:
+            ui->le_element3->setText(QString::number(QuickSort->Get(j)));
+            break;
+        case 3:
+            ui->le_element4->setText(QString::number(QuickSort->Get(j)));
+            break;
+        case 4:
+            ui->le_element5->setText(QString::number(QuickSort->Get(j)));
+            break;
+        case 5:
+            ui->le_element6->setText(QString::number(QuickSort->Get(j)));
+            break;
+        case 6:
+            ui->le_element7->setText(QString::number(QuickSort->Get(j)));
+            break;
+        case 7:
+            ui->le_element8->setText(QString::number(QuickSort->Get(j)));
+            break;
+        case 8:
+            ui->le_element9->setText(QString::number(QuickSort->Get(j)));
+            break;
+        case 9:
+            ui->le_element10->setText(QString::number(QuickSort->Get(j)));
+            break;
+        }
+    }
+}
+
+void MainWindow::on_OpenFile_triggered()
+{
+
+    QFile file(QFileDialog::getOpenFileName( this,tr("choose your file"),"","TextFile(*.txt)"));
+    if(!file.open(QIODevice::ReadOnly)) {
+        //QMessageBox::information(0,"error",file.errorString());
+    }
+
+    QTextStream in(&file);
+
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+        fields = line.split(",").replaceInStrings("[","").replaceInStrings("]","");
+
+        for(int i=0;i<fields.size();i++)
+        {
+            this->QuickSort->Add(fields.at(i).toInt());
+        }
+        qDebug()<<this->QuickSort->GetSize();
+        qDebug()<<this->QuickSort->Get(1);
+    }
+    this->renderArea->setArray(this->QuickSort);
+    this->renderArea->setFocus();
+    Fill();
+    file.close();
+    ui->bt_play->setEnabled(true);
+
+}
+
+
+void MainWindow::on_bt_play_clicked()
+{
+    this->QuickSort->QuickSort(0,this->QuickSort->items.size()-1);
+    this->renderArea->update();
+
+}
