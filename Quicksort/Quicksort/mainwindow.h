@@ -31,7 +31,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QuickSortArray *QuickSort;
-    RenderArea *renderArea;
+
     QTime *timer;
 };
 

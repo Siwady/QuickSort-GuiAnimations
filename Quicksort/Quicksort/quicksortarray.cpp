@@ -1,9 +1,11 @@
 #include "quicksortarray.h"
+#include "renderarea.h"
 
 QuickSortArray::QuickSortArray()
 {
     this->color = Qt::white;
     this->ItemSize=30;
+    this->renderArea = new RenderArea();
 }
 
 void QuickSortArray::Add(int number)
@@ -40,7 +42,7 @@ int QuickSortArray::GetSize()
 
 void QuickSortArray::QuickSort(int left, int right) {
     int i = left, j = right;
-    int tmp;
+    int temp;
     int pivot = items[(left + right) / 2];
 
     /* partition */
@@ -50,17 +52,21 @@ void QuickSortArray::QuickSort(int left, int right) {
           while (items[j] > pivot)
                 j--;
           if (i <= j) {
-                tmp = items[i];
+                temp = items[i];
                 items[i] = items[j];
-                items[j] = tmp;
+                items[j] = temp;
                 i++;
                 j--;
           }
     };
-
     /* recursion */
+
     if (left < j)
           QuickSort(left, j);
+
+
     if (i < right)
           QuickSort(i, right);
+
+
 }

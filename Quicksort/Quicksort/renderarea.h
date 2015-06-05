@@ -6,6 +6,7 @@
 
 #include "quicksortarray.h"
 
+class QuickSortArray;
 
 class RenderArea : public QWidget
 {
@@ -13,10 +14,7 @@ class RenderArea : public QWidget
 public:
     explicit RenderArea(QWidget *parent = 0);
 
-    void setArray (QuickSortArray *qArray)
-    {
-        this->QArray = qArray;
-    }
+    void setArray (QuickSortArray *qArray);
 
 
 protected:

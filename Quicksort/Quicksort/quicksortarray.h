@@ -2,9 +2,12 @@
 #define QUICKSORTARRAY_H
 
 #include <QPainter>
+#include <QThread>
+#include "renderarea.h"
 
+class RenderArea;
 
-class QuickSortArray
+class QuickSortArray: public QThread
 {
 public:
     QuickSortArray();
@@ -17,6 +20,13 @@ public:
     int ItemSize;
     void QuickSort(int left, int right);
     QList<int> items;
+    int index;
+
+    RenderArea *renderArea;
+
+    static void msleep(unsigned long msecs){QThread::msleep(msecs);}   //Sleeper::msleep(10);
+    static void sleep(unsigned long secs){QThread::sleep(secs);}    //Sleeper::sleep(10);
+
 private:
     QColor color;
 

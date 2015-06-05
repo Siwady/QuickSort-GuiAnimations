@@ -12,17 +12,16 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     qApp->setStyle("fusion");
-    this->renderArea = new RenderArea();
-    ui->gridLayout->addWidget(this->renderArea,0,0);
-    qDebug()<<ui->gridLayout->maximumSize().width();
     this->QuickSort=new QuickSortArray();
+    //ui->gridLayout->addWidget(this->QuickSort->renderArea,0,0);
+    qDebug()<<ui->gridLayout->maximumSize().width();
+
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete renderArea;
 }
 
 void MainWindow::Fill()
@@ -85,8 +84,8 @@ void MainWindow::on_OpenFile_triggered()
         qDebug()<<this->QuickSort->GetSize();
         qDebug()<<this->QuickSort->Get(1);
     }
-    this->renderArea->setArray(this->QuickSort);
-    this->renderArea->setFocus();
+    this->QuickSort->renderArea->setArray(this->QuickSort);
+    this->QuickSort->renderArea->setFocus();
     Fill();
     file.close();
     ui->bt_play->setEnabled(true);
@@ -96,7 +95,8 @@ void MainWindow::on_OpenFile_triggered()
 
 void MainWindow::on_bt_play_clicked()
 {
+
     this->QuickSort->QuickSort(0,this->QuickSort->items.size()-1);
-    this->renderArea->update();
+    this->QuickSort->renderArea->update();
 
 }
