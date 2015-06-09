@@ -5,7 +5,7 @@ QuickSortArray::QuickSortArray()
 {
     this->color = Qt::white;
     this->ItemSize=30;
-    this->renderArea = new RenderArea();
+    this->renderArea = new RenderArea(this);
 }
 
 void QuickSortArray::Add(int number)
@@ -60,13 +60,16 @@ void QuickSortArray::QuickSort(int left, int right) {
           }
     };
     /* recursion */
-
+    this->renderArea->repaint();
+    msleep(50);
     if (left < j)
           QuickSort(left, j);
-
-
+    this->renderArea->repaint();
+    msleep(50);
     if (i < right)
           QuickSort(i, right);
 
+    this->renderArea->repaint();
+    msleep(50);
 
 }

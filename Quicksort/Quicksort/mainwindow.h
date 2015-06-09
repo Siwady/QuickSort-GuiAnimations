@@ -8,7 +8,6 @@
 #include <QTimer>
 #include <time.h>
 #include <QLineEdit>
-#include "renderarea.h"
 #include "quicksortarray.h"
 
 namespace Ui {

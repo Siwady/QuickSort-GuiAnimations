@@ -3,7 +3,6 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QFile>
-#include "renderarea.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -12,8 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     qApp->setStyle("fusion");
+
     this->QuickSort=new QuickSortArray();
-    //ui->gridLayout->addWidget(this->QuickSort->renderArea,0,0);
+    ui->gridLayout->addWidget(this->QuickSort->renderArea,0,0);
     qDebug()<<ui->gridLayout->maximumSize().width();
 
 
@@ -84,7 +84,7 @@ void MainWindow::on_OpenFile_triggered()
         qDebug()<<this->QuickSort->GetSize();
         qDebug()<<this->QuickSort->Get(1);
     }
-    this->QuickSort->renderArea->setArray(this->QuickSort);
+   // this->QuickSort->renderArea->setArray(this->QuickSort);
     this->QuickSort->renderArea->setFocus();
     Fill();
     file.close();
@@ -97,6 +97,6 @@ void MainWindow::on_bt_play_clicked()
 {
 
     this->QuickSort->QuickSort(0,this->QuickSort->items.size()-1);
-    this->QuickSort->renderArea->update();
+    //this->QuickSort->renderArea->update();
 
 }

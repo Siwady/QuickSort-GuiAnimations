@@ -12,9 +12,11 @@ class RenderArea : public QWidget
 {
     Q_OBJECT
 public:
-    explicit RenderArea(QWidget *parent = 0);
+    explicit RenderArea(QuickSortArray *Q,QWidget *parent = 0);
 
     void setArray (QuickSortArray *qArray);
+
+    QuickSortArray *QArray;
 
 
 protected:
@@ -25,7 +27,6 @@ signals:
     
 public slots:
 private:
-    QuickSortArray *QArray;
 
 };
 

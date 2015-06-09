@@ -21,7 +21,6 @@ public:
     void QuickSort(int left, int right);
     QList<int> items;
     int index;
-
     RenderArea *renderArea;
 
     static void msleep(unsigned long msecs){QThread::msleep(msecs);}   //Sleeper::msleep(10);

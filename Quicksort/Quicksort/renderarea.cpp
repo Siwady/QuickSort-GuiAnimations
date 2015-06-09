@@ -1,9 +1,9 @@
 #include "renderarea.h"
 
-RenderArea::RenderArea(QWidget *parent) :
+RenderArea::RenderArea(QuickSortArray *Q, QWidget *parent) :
     QWidget(parent)
 {
-    // this->QArray=new QuickSortArray();    // <----
+     this->QArray=Q;// <----
 }
 
 void RenderArea::setArray(QuickSortArray *qArray)
@@ -17,7 +17,7 @@ void RenderArea::paintEvent(QPaintEvent *event)
     painter.setPen(Qt::black);
     painter.setBrush(Qt::white);
     painter.drawRect(0,0,this->width()-1,this->height()-1);
-   // this->QArray->RenderArray(&painter);
+    this->QArray->RenderArray(&painter);
 }
 
 
