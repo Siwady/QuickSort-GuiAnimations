@@ -22,6 +22,10 @@ public:
     QList<int> items;
     int index;
     RenderArea *renderArea;
+    int indexA;
+    int indexB;
+    int pivotIndex;
+
 
     static void msleep(unsigned long msecs){QThread::msleep(msecs);}   //Sleeper::msleep(10);
     static void sleep(unsigned long secs){QThread::sleep(secs);}    //Sleeper::sleep(10);

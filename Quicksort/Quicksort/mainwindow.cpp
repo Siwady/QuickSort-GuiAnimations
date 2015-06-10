@@ -95,7 +95,7 @@ void MainWindow::on_OpenFile_triggered()
 
 void MainWindow::on_bt_play_clicked()
 {
-
+    //this->QuickSort->start();
     this->QuickSort->QuickSort(0,this->QuickSort->items.size()-1);
     //this->QuickSort->renderArea->update();
 
