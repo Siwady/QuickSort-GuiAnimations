@@ -88,15 +88,32 @@ void MainWindow::on_OpenFile_triggered()
     this->QuickSort->renderArea->setFocus();
     Fill();
     file.close();
-    ui->bt_play->setEnabled(true);
+
 
 }
 
 
 void MainWindow::on_bt_play_clicked()
 {
-    //this->QuickSort->start();
-    this->QuickSort->QuickSort(0,this->QuickSort->items.size()-1);
-    //this->QuickSort->renderArea->update();
+    //this->QuickSort->QuickSort(0,this->QuickSort->items.size()-1);
+    this->QuickSort->PlayQuickSort();
+}
 
+void MainWindow::on_pb_generate_clicked()
+{
+    this->QuickSort->GenerateSteps();
+    qDebug()<<this->QuickSort->steps.size();
+    ui->bt_play->setEnabled(true);
+    ui->pb_nextStep->setEnabled(true);
+    ui->pb_previousStep->setEnabled(true);
+}
+
+void MainWindow::on_pb_nextStep_clicked()
+{
+    this->QuickSort->NextStep();
+}
+
+void MainWindow::on_pb_previousStep_clicked()
+{
+    this->QuickSort->PreviousStep();
 }

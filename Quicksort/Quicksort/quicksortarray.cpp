@@ -9,6 +9,8 @@ QuickSortArray::QuickSortArray()
     this->indexA=-1;
     this->indexB=-1;
     this->pivotIndex=-1;
+    this->currentStep=0;
+    this->Play=false;
 }
 
 void QuickSortArray::Add(int number)
@@ -56,22 +58,24 @@ void QuickSortArray::QuickSort(int left, int right) {
     int temp;
     int pivot = items[(left + right) / 2];
     this->pivotIndex=(left + right) / 2;
-    /* partition */
+
+    this->steps.push_back(new QuickSortStep(i,j,(left + right)/2,this->items));
     while (i <= j) {
           while (items[i] < pivot){
               indexA=i;
               indexB=j;
               i++;
-              msleep(500);
-              this->renderArea->repaint();
-
+              //msleep(500);
+              //this->renderArea->repaint();
+              this->steps.push_back(new QuickSortStep(i,j,(left + right)/2,this->items));
           }
           while (items[j] > pivot){
               indexA=i;
               indexB=j;
               j--;
-              msleep(500);
-              this->renderArea->repaint();
+              //msleep(500);
+              this->steps.push_back(new QuickSortStep(i,j,(left + right)/2,this->items));
+             // this->renderArea->repaint();
 
           }if (i <= j) {
                 indexA=i;
@@ -81,24 +85,92 @@ void QuickSortArray::QuickSort(int left, int right) {
                 items[j] = temp;
                 i++;
                 j--;
-                msleep(1000);
-                this->renderArea->repaint();
+                //msleep(1000);
+                this->steps.push_back(new QuickSortStep(i,j,(left + right)/2,this->items));
+               // this->renderArea->repaint();
           }
 
     };
-    /* recursion */
-    this->renderArea->repaint();
+
+    //this->renderArea->repaint();
 
     if (left < j)
           QuickSort(left, j);
-    this->renderArea->repaint();
+   // this->renderArea->repaint();
 
     if (i < right)
           QuickSort(i, right);
 
-    this->renderArea->repaint();
+    //this->renderArea->repaint();
 
     indexA=indexB=pivotIndex=this->items.size()+1;
+    this->steps.push_back(new QuickSortStep(-1,-1,-1,this->items));
+}
 
+void QuickSortArray::NextStep()
+{
+    if(currentStep+1<steps.size())
+    {
+        currentStep++;
+        this->indexA=steps.at(currentStep)->LeftIndex;
+        this->indexB=steps.at(currentStep)->RightIndex;
+        this->pivotIndex=steps.at(currentStep)->PivotIndex;
+        this->items.clear();
+        for(int i=0;i<steps.at(currentStep)->Items.size();i++)
+            Add(steps.at(currentStep)->Items.at(i));
+
+        this->renderArea->repaint();
+        //this->msleep(100);
+    }
+}
+
+void QuickSortArray::PreviousStep()
+{
+    if(currentStep>0)
+    {
+        currentStep--;
+
+        this->indexA=steps.at(currentStep)->LeftIndex;
+        this->indexB=steps.at(currentStep)->RightIndex;
+        this->pivotIndex=steps.at(currentStep)->PivotIndex;
+        this->items.clear();
+        for(int i=0;i<steps.at(currentStep)->Items.size();i++)
+            Add(steps.at(currentStep)->Items.at(i));
+
+        this->renderArea->repaint();
+        //this->msleep(100);
+
+    }
+}
+
+void QuickSortArray::PlayQuickSort()
+{
+    currentStep++;
+    while(currentStep<steps.size())
+    {
+        this->indexA=steps.at(currentStep)->LeftIndex;
+        this->indexB=steps.at(currentStep)->RightIndex;
+        this->pivotIndex=steps.at(currentStep)->PivotIndex;
+        this->items.clear();
+        for(int i=0;i<steps.at(currentStep)->Items.size();i++)
+            Add(steps.at(currentStep)->Items.at(i));
+
+        this->renderArea->repaint();
+        this->msleep(100);
+        currentStep++;
+    }
+}
+
+void QuickSortArray::GenerateSteps()
+{
+    QuickSort(0,this->items.size()-1);
+    this->indexA=steps.at(currentStep)->LeftIndex;
+    this->indexB=steps.at(currentStep)->RightIndex;
+    this->pivotIndex=steps.at(currentStep)->PivotIndex;
+    this->items.clear();
+    for(int i=0;i<steps.at(currentStep)->Items.size();i++)
+        Add(steps.at(currentStep)->Items.at(i));
+
+    this->renderArea->repaint();
 }
 

@@ -342,7 +342,7 @@ border-color: rgb(219, 249, 255);}</string>
      <string>Elements</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pb_previousStep">
     <property name="enabled">
      <bool>false</bool>
     </property>
@@ -396,7 +396,7 @@ border-color: rgb(219, 249, 255);}</string>
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="pb_nextStep">
     <property name="enabled">
      <bool>false</bool>
     </property>
@@ -421,6 +421,19 @@ border-color: rgb(219, 249, 255);}</string>
     </property>
     <property name="checkable">
      <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pb_generate">
+    <property name="geometry">
+     <rect>
+      <x>834</x>
+      <y>40</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Generate Steps</string>
     </property>
    </widget>
   </widget>
