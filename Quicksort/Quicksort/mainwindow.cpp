@@ -27,8 +27,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::Fill()
 {
-    for(int i=0;i<this->EditList.size();i++)
+    for(int i=0;i<this->EditList.size();i++){
         ui->gridElements->removeWidget(this->EditList.at(i));
+        delete this->EditList.at(i);
+    }
     ui->gridElements->update();
     this->EditList.clear();
     //this->QuickSort->items.clear();
@@ -40,7 +42,6 @@ void MainWindow::Fill()
     for(int j=0;j<this->EditList.size();j++)
     {
         EditList.at(j)->setAlignment(Qt::AlignCenter);
-
         ui->gridElements->addWidget(EditList.at(j));
     }
 }

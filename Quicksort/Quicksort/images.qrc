@@ -1,8 +1,5 @@
 <RCC>
     <qresource prefix="/">
         <file>Images/Arrow.png</file>
-        <file>Images/background.jpg</file>
-        <file>Images/background5.jpg</file>
-        <file>Images/border.png</file>
     </qresource>
 </RCC>

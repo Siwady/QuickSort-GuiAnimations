@@ -124,6 +124,19 @@ void QuickSortArray::QuickSort(int left, int right) {
 
 }
 
+void QuickSortArray::QuickSort3Ways(int left, int right)
+{
+
+}
+
+void QuickSortArray::swap(int a, int b)
+{
+    int temp;
+    temp = items[a];
+    items[a] = items[b];
+    items[b] = temp;
+}
+
 void QuickSortArray::NextStep()
 {
     if(currentStep+1<steps.size())

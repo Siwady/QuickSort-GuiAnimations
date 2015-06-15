@@ -19,6 +19,7 @@ public:
     QColor getColor() const { return this->color; }
     int ItemSize;
     void QuickSort(int left, int right);
+
     QList<int> items;
     QList<QuickSortStep*> steps;
     int index;
@@ -28,6 +29,9 @@ public:
     int pivotIndex;
     int End;
     int Begin;
+
+    void QuickSort3Ways(int left, int right);
+    void swap(int a, int b);
 
     bool Play;
     int currentStep;
