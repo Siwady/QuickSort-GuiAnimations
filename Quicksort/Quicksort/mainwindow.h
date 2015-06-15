@@ -9,6 +9,7 @@
 #include <time.h>
 #include <QLineEdit>
 #include "quicksortarray.h"
+#include <QTextEdit>
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +24,9 @@ public:
     ~MainWindow();
     QStringList fields;
     void Fill();
+
+    QList<QTextEdit*> EditList;
+
 private slots:
     void on_OpenFile_triggered();
     void on_bt_play_clicked();
@@ -32,6 +36,8 @@ private slots:
     void on_pb_nextStep_clicked();
 
     void on_pb_previousStep_clicked();
+
+    void on_pb_update_clicked();
 
 private:
     Ui::MainWindow *ui;

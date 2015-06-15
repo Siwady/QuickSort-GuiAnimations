@@ -26,6 +26,8 @@ public:
     int indexA;
     int indexB;
     int pivotIndex;
+    int End;
+    int Begin;
 
     bool Play;
     int currentStep;
@@ -46,14 +48,16 @@ class QuickSortStep
 {
 public:
     QuickSortStep(){}
-    QuickSortStep(int leftIndex,int rightIndex,int pivotIndex,QList<int> items)
+    QuickSortStep(int begin,int end,int leftIndex,int rightIndex,int pivotIndex,QList<int> items)
     {
+        this->Begin=begin;
+        this->End=end;
         this->LeftIndex=leftIndex;
         this->RightIndex=rightIndex;
         this->PivotIndex=pivotIndex;
         this->Items=items;
     }
-    int LeftIndex, RightIndex,PivotIndex;
+    int LeftIndex, RightIndex,PivotIndex,Begin,End;
     QList<int> Items;
 
 };

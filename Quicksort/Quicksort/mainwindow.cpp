@@ -9,14 +9,15 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
     qApp->setStyle("fusion");
 
     this->QuickSort=new QuickSortArray();
     ui->gridLayout->addWidget(this->QuickSort->renderArea,0,0);
-    qDebug()<<ui->gridLayout->maximumSize().width();
 
-
+    ui->cb_algorithm->addItem("1. Quicksort 2 Ways Algorithm");
+    ui->cb_algorithm->addItem("2. Quicksort 3 Ways Algorithm");
 }
 
 MainWindow::~MainWindow()
@@ -26,40 +27,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::Fill()
 {
+    for(int i=0;i<this->EditList.size();i++)
+        ui->gridElements->removeWidget(this->EditList.at(i));
+    ui->gridElements->update();
+    this->EditList.clear();
+    //this->QuickSort->items.clear();
     for(int j=0;j<this->QuickSort->GetSize();j++)
     {
-        switch (j) {
-        case 0:
-            ui->le_element1->setText(QString::number(QuickSort->Get(j)));
-            break;
-        case 1:
-            ui->le_element2->setText(QString::number(QuickSort->Get(j)));
-            break;
-        case 2:
-            ui->le_element3->setText(QString::number(QuickSort->Get(j)));
-            break;
-        case 3:
-            ui->le_element4->setText(QString::number(QuickSort->Get(j)));
-            break;
-        case 4:
-            ui->le_element5->setText(QString::number(QuickSort->Get(j)));
-            break;
-        case 5:
-            ui->le_element6->setText(QString::number(QuickSort->Get(j)));
-            break;
-        case 6:
-            ui->le_element7->setText(QString::number(QuickSort->Get(j)));
-            break;
-        case 7:
-            ui->le_element8->setText(QString::number(QuickSort->Get(j)));
-            break;
-        case 8:
-            ui->le_element9->setText(QString::number(QuickSort->Get(j)));
-            break;
-        case 9:
-            ui->le_element10->setText(QString::number(QuickSort->Get(j)));
-            break;
-        }
+        EditList.push_back(new QTextEdit(QString::number(this->QuickSort->Get(j)),this));
+        //ui->gridElements->addWidget(EditList.at(j));
+    }
+    for(int j=0;j<this->EditList.size();j++)
+    {
+        EditList.at(j)->setAlignment(Qt::AlignCenter);
+
+        ui->gridElements->addWidget(EditList.at(j));
     }
 }
 
@@ -67,26 +49,26 @@ void MainWindow::on_OpenFile_triggered()
 {
 
     QFile file(QFileDialog::getOpenFileName( this,tr("choose your file"),"","TextFile(*.txt)"));
-    if(!file.open(QIODevice::ReadOnly)) {
-        //QMessageBox::information(0,"error",file.errorString());
-    }
+    if(file.open(QIODevice::ReadOnly)) {
+        this->QuickSort->items.clear();
+        QTextStream in(&file);
+        while(!in.atEnd()) {
+            QString line = in.readLine();
+            fields = line.split(",").replaceInStrings("[","").replaceInStrings("]","");
 
-    QTextStream in(&file);
-
-    while(!in.atEnd()) {
-        QString line = in.readLine();
-        fields = line.split(",").replaceInStrings("[","").replaceInStrings("]","");
-
-        for(int i=0;i<fields.size();i++)
-        {
-            this->QuickSort->Add(fields.at(i).toInt());
+            for(int i=0;i<fields.size();i++)
+            {
+                this->QuickSort->Add(fields.at(i).toInt());
+            }
+            qDebug()<<this->QuickSort->GetSize();
+            qDebug()<<this->QuickSort->Get(1);
         }
-        qDebug()<<this->QuickSort->GetSize();
-        qDebug()<<this->QuickSort->Get(1);
+       // this->QuickSort->renderArea->setArray(this->QuickSort);
+        this->QuickSort->renderArea->setFocus();
+        Fill();
     }
-   // this->QuickSort->renderArea->setArray(this->QuickSort);
-    this->QuickSort->renderArea->setFocus();
-    Fill();
+
+
     file.close();
 
 
@@ -116,4 +98,20 @@ void MainWindow::on_pb_nextStep_clicked()
 void MainWindow::on_pb_previousStep_clicked()
 {
     this->QuickSort->PreviousStep();
+}
+
+void MainWindow::on_pb_update_clicked()
+{
+    this->QuickSort->items.clear();
+    ui->bt_play->setEnabled(false);
+    ui->pb_nextStep->setEnabled(false);
+    ui->pb_previousStep->setEnabled(false);
+    for(int i=0;i<this->EditList.size();i++)
+    {
+            this->QuickSort->Add(this->EditList.at(i)->toPlainText().toInt());
+    }
+
+    this->QuickSort->indexA=this->QuickSort->indexB=this->QuickSort->pivotIndex=this->QuickSort->End=
+            this->QuickSort->Begin=-1;
+    this->QuickSort->renderArea->repaint();
 }
