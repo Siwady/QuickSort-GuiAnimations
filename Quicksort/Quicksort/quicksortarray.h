@@ -11,6 +11,7 @@ class QuickSortArray: public QThread
 {
 public:
     QuickSortArray();
+    ~QuickSortArray();
     void Add(int number);
     void RenderArray(QPainter *painter);
     int Get(int index);
@@ -29,6 +30,7 @@ public:
     int pivotIndex;
     int End;
     int Begin;
+    bool Swap;
 
     void QuickSort3Ways(int left, int right);
     void swap(int a, int b);
@@ -38,7 +40,7 @@ public:
     void NextStep();
     void PreviousStep();
     void PlayQuickSort();
-    void GenerateSteps();
+    void GenerateSteps(int i);
 
     static void msleep(unsigned long msecs){QThread::msleep(msecs);}   //Sleeper::msleep(10);
     static void sleep(unsigned long secs){QThread::sleep(secs);}    //Sleeper::sleep(10);
@@ -52,7 +54,7 @@ class QuickSortStep
 {
 public:
     QuickSortStep(){}
-    QuickSortStep(int begin,int end,int leftIndex,int rightIndex,int pivotIndex,QList<int> items)
+    QuickSortStep(int begin,int end,int leftIndex,int rightIndex,int pivotIndex,bool swap,QList<int> items)
     {
         this->Begin=begin;
         this->End=end;
@@ -60,8 +62,9 @@ public:
         this->RightIndex=rightIndex;
         this->PivotIndex=pivotIndex;
         this->Items=items;
+        this->Swap=swap;
     }
-    int LeftIndex, RightIndex,PivotIndex,Begin,End;
+    int LeftIndex, RightIndex,PivotIndex,Begin,End,Swap;
     QList<int> Items;
 
 };

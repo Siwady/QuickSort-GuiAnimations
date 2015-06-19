@@ -14,6 +14,12 @@ QuickSortArray::QuickSortArray()
     this->pivotIndex=-1;
     this->currentStep=0;
     this->Play=false;
+    this->Swap=false;
+}
+
+QuickSortArray::~QuickSortArray()
+{
+    delete renderArea;
 }
 
 void QuickSortArray::Add(int number)
@@ -25,7 +31,8 @@ void QuickSortArray::RenderArray(QPainter *painter)
 {
     painter->setBrush(this->color);
     painter->setPen(Qt::black);
-    QPixmap arrow1;
+    QPixmap arrow1,pivot;
+    pivot.load("://Images/Pivot2.png");
     arrow1.load("://Images/Arrow.png");
 
     for(int i=0;i<this->items.size();i++)
@@ -35,15 +42,19 @@ void QuickSortArray::RenderArray(QPainter *painter)
 
         if(i==pivotIndex)
         {
-            painter->setBrush(Qt::cyan);
+            painter->drawPixmap((880/2)-((items.size()*30)/2)+(i*30),40,30,30,pivot);
+            /*painter->setBrush(Qt::cyan);
+            painter->drawRect((880/2)-((items.size()*30)/2)+(i*30),70,this->ItemSize,this->ItemSize); // de 30 en 30 el offset
+            painter->drawText((880/2)-((items.size()*30)/2)+(i*30)+((ItemSize/2)-3),70+((ItemSize/2)+3), QString::number(this->items.at(i)));*/
+        }
+        if(i==indexA || i==indexB){
+            if(this->Swap)
+                painter->setBrush(Qt::cyan);
+            else
+                painter->setBrush(Qt::yellow);
+
             painter->drawRect((880/2)-((items.size()*30)/2)+(i*30),70,this->ItemSize,this->ItemSize); // de 30 en 30 el offset
             painter->drawText((880/2)-((items.size()*30)/2)+(i*30)+((ItemSize/2)-3),70+((ItemSize/2)+3), QString::number(this->items.at(i)));
-        }else if(i==indexA || i==indexB){
-
-            painter->setBrush(Qt::yellow);
-
-            painter->drawRect((880/2)-((items.size()*30)/2)+(i*30),70,this->ItemSize,this->ItemSize); // de 30 en 30 el offset
-            painter->drawText((880/2)-((items.size()*30)/2)+(i*30)+((ItemSize/2)-3),30+((ItemSize/2)+3), QString::number(this->items.at(i)));
         }else{
             painter->setBrush(this->color);
             painter->drawRect((880/2)-((items.size()*30)/2)+(i*30),70,this->ItemSize,this->ItemSize); // de 30 en 30 el offset
@@ -69,25 +80,20 @@ void QuickSortArray::QuickSort(int left, int right) {
     int pivot = items[(left + right) / 2];
     this->pivotIndex=(left + right) / 2;
 
-    this->steps.push_back(new QuickSortStep(left,right,i,j,pivotIndex,this->items));
+    this->steps.push_back(new QuickSortStep(left,right,i,j,pivotIndex,false,this->items));
     while (i <= j) {
           while (items[i] < pivot){
               indexA=i;
               indexB=j;
-              this->steps.push_back(new QuickSortStep(left,right,i,j,pivotIndex,this->items));
+              this->steps.push_back(new QuickSortStep(left,right,i,j,pivotIndex,false,this->items));
               i++;
-              //msleep(500);
-              //this->renderArea->repaint();
 
           }
           while (items[j] > pivot){
               indexA=i;
               indexB=j;
-              this->steps.push_back(new QuickSortStep(left,right,i,j,pivotIndex,this->items));
+              this->steps.push_back(new QuickSortStep(left,right,i,j,pivotIndex,false,this->items));
               j--;
-              //msleep(500);
-
-             // this->renderArea->repaint();
 
           }if (i <= j) {
                 if(i==pivotIndex)
@@ -99,29 +105,16 @@ void QuickSortArray::QuickSort(int left, int right) {
                 temp = items[i];
                 items[i] = items[j];
                 items[j] = temp;
-                this->steps.push_back(new QuickSortStep(left,right,i,j,pivotIndex,this->items));
+                this->steps.push_back(new QuickSortStep(left,right,i,j,pivotIndex,true,this->items));
                 i++;
                 j--;
-                //msleep(1000);
-
-               // this->renderArea->repaint();
           }
-
     };
-
-    //this->renderArea->repaint();
-
     if (left < j)
           QuickSort(left, j);
-   // this->renderArea->repaint();
 
     if (i < right)
           QuickSort(i, right);
-
-    //this->renderArea->repaint();
-
-    //indexA=indexB=pivotIndex=this->items.size()+1;
-
 }
 
 void QuickSortArray::QuickSort3Ways(int left, int right)
@@ -145,7 +138,7 @@ void QuickSortArray::QuickSort3Ways(int left, int right)
                     pivotIndex=l;
                 else if(l==pivotIndex)
                     pivotIndex=i;
-                this->steps.push_back(new QuickSortStep(left,right,l,r,pivotIndex,this->items));
+                this->steps.push_back(new QuickSortStep(left,right,l,r,pivotIndex,true,this->items));
                 i++;
                 l++;
             }else if(pivot<this->items.at(i))
@@ -155,10 +148,10 @@ void QuickSortArray::QuickSort3Ways(int left, int right)
                     pivotIndex=r;
                 else if(r==pivotIndex)
                     pivotIndex=i;
-                this->steps.push_back(new QuickSortStep(left,right,l,r,pivotIndex,this->items));
+                this->steps.push_back(new QuickSortStep(left,right,l,r,pivotIndex,true,this->items));
                 r--;
             }else{
-                this->steps.push_back(new QuickSortStep(left,right,l,r,pivotIndex,this->items));
+                this->steps.push_back(new QuickSortStep(left,right,l,r,pivotIndex,false,this->items));
                 i++;
             }
         }
@@ -186,6 +179,7 @@ void QuickSortArray::NextStep()
         this->indexA=steps.at(currentStep)->LeftIndex;
         this->indexB=steps.at(currentStep)->RightIndex;
         this->pivotIndex=steps.at(currentStep)->PivotIndex;
+        this->Swap=steps.at(currentStep)->Swap;
         this->items.clear();
         for(int i=0;i<steps.at(currentStep)->Items.size();i++)
             Add(steps.at(currentStep)->Items.at(i));
@@ -206,6 +200,7 @@ void QuickSortArray::PreviousStep()
         this->indexB=steps.at(currentStep)->RightIndex;
         this->pivotIndex=steps.at(currentStep)->PivotIndex;
         this->items.clear();
+        this->Swap=steps.at(currentStep)->Swap;
         for(int i=0;i<steps.at(currentStep)->Items.size();i++)
             Add(steps.at(currentStep)->Items.at(i));
 
@@ -225,6 +220,7 @@ void QuickSortArray::PlayQuickSort()
         this->indexA=steps.at(currentStep)->LeftIndex;
         this->indexB=steps.at(currentStep)->RightIndex;
         this->pivotIndex=steps.at(currentStep)->PivotIndex;
+        this->Swap=steps.at(currentStep)->Swap;
         this->items.clear();
         for(int i=0;i<steps.at(currentStep)->Items.size();i++)
             Add(steps.at(currentStep)->Items.at(i));
@@ -235,11 +231,14 @@ void QuickSortArray::PlayQuickSort()
     }
 }
 
-void QuickSortArray::GenerateSteps()
+void QuickSortArray::GenerateSteps(int i)
 {
-    QuickSort3Ways(0,this->items.size()-1);
+    if(i==0)
+        QuickSort(0,this->items.size()-1);
+    else if(i==1)
+        QuickSort3Ways(0,this->items.size()-1);
     //QuickSort(0,this->items.size()-1);
-    this->steps.push_back(new QuickSortStep(-1,-1,-1,-1,-1,this->items));
+    this->steps.push_back(new QuickSortStep(-1,-1,-1,-1,-1,false,this->items));
     this->End=steps.at(currentStep)->End;
     this->Begin=steps.at(currentStep)->Begin;
     this->indexA=steps.at(currentStep)->LeftIndex;

@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete QuickSort;
+    delete timer;
 }
 
 void MainWindow::Fill()
@@ -79,16 +81,21 @@ void MainWindow::on_OpenFile_triggered()
 void MainWindow::on_bt_play_clicked()
 {
     //this->QuickSort->QuickSort(0,this->QuickSort->items.size()-1);
+
+    ui->bt_play->setText("Pause");
     this->QuickSort->PlayQuickSort();
+
+
 }
 
 void MainWindow::on_pb_generate_clicked()
 {
-    this->QuickSort->GenerateSteps();
+    this->QuickSort->GenerateSteps(ui->cb_algorithm->currentIndex());
     qDebug()<<this->QuickSort->steps.size();
     ui->bt_play->setEnabled(true);
     ui->pb_nextStep->setEnabled(true);
     ui->pb_previousStep->setEnabled(true);
+
 }
 
 void MainWindow::on_pb_nextStep_clicked()
@@ -105,6 +112,7 @@ void MainWindow::on_pb_update_clicked()
 {
     this->QuickSort->items.clear();
     ui->bt_play->setEnabled(false);
+    ui->bt_play->setText("Play");
     ui->pb_nextStep->setEnabled(false);
     ui->pb_previousStep->setEnabled(false);
     for(int i=0;i<this->EditList.size();i++)

@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>Images/Arrow.png</file>
+        <file>Images/Pivot.png</file>
+        <file>Images/Pivot2.png</file>
     </qresource>
 </RCC>
