@@ -18,13 +18,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->cb_algorithm->addItem("1. Quicksort 2 Ways Algorithm");
     ui->cb_algorithm->addItem("2. Quicksort 3 Ways Algorithm");
+    play=false;
+    this->timer=new QTimer(this);
+    connect(this->timer,SIGNAL(timeout()),this,SLOT(Play()));
+    this->timer->start(100);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    play=false;
     delete QuickSort;
-    delete timer;
+
 }
 
 void MainWindow::Fill()
@@ -81,15 +86,28 @@ void MainWindow::on_OpenFile_triggered()
 void MainWindow::on_bt_play_clicked()
 {
     //this->QuickSort->QuickSort(0,this->QuickSort->items.size()-1);
-
-    ui->bt_play->setText("Pause");
-    this->QuickSort->PlayQuickSort();
-
+    if(!play){
+        ui->bt_play->setText("Pause");
+        play=true;
+        this->timer->start(50);
+    }else
+    {
+        ui->bt_play->setText("Play");
+        play=false;
+    }
+    //this->QuickSort->PlayQuickSort();
+    this->QuickSort->renderArea->update();
 
 }
 
 void MainWindow::on_pb_generate_clicked()
 {
+    for(int i=0;i<this->QuickSort->steps.size();i++)
+    {
+        delete this->QuickSort->steps.at(i);
+    }
+    this->QuickSort->currentStep=0;
+    this->QuickSort->steps.clear();
     this->QuickSort->GenerateSteps(ui->cb_algorithm->currentIndex());
     qDebug()<<this->QuickSort->steps.size();
     ui->bt_play->setEnabled(true);
@@ -122,5 +140,19 @@ void MainWindow::on_pb_update_clicked()
 
     this->QuickSort->indexA=this->QuickSort->indexB=this->QuickSort->pivotIndex=this->QuickSort->End=
             this->QuickSort->Begin=-1;
-    this->QuickSort->renderArea->repaint();
+    this->QuickSort->renderArea->update();
+}
+
+void MainWindow::Play()
+{
+    if(play)
+    {
+        this->QuickSort->PlayAlgorithm();
+        this->QuickSort->renderArea->update();
+        if(this->QuickSort->currentStep==this->QuickSort->steps.size()-1){
+            ui->bt_play->setText("Play");
+            play=false;
+        }
+        timer->start(100);
+    }
 }

@@ -21,7 +21,7 @@ public:
 
 protected:
      void paintEvent(QPaintEvent *event);
-
+     void enterEvent ( QEvent * event ) ;
     
 signals:
     

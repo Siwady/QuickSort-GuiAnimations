@@ -26,3 +26,4 @@ FORMS    += mainwindow.ui
 RESOURCES += \
     images.qrc
 
+QMAKE_CXXFLAGS += -std=c++11

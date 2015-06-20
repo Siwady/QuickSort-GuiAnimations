@@ -20,4 +20,8 @@ void RenderArea::paintEvent(QPaintEvent *event)
     this->QArray->RenderArray(&painter);
 }
 
+void RenderArea::enterEvent ( QEvent * event )
+{
+    this->setFocus();
+}
 

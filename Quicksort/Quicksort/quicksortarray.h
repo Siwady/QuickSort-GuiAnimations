@@ -2,12 +2,14 @@
 #define QUICKSORTARRAY_H
 
 #include <QPainter>
-#include <QThread>
 #include "renderarea.h"
+#include <QTimer>
+#include <QTime>
+
 class RenderArea;
 class QuickSortStep;
 
-class QuickSortArray: public QThread
+class QuickSortArray
 {
 public:
     QuickSortArray();
@@ -20,7 +22,6 @@ public:
     QColor getColor() const { return this->color; }
     int ItemSize;
     void QuickSort(int left, int right);
-
     QList<int> items;
     QList<QuickSortStep*> steps;
     int index;
@@ -31,7 +32,6 @@ public:
     int End;
     int Begin;
     bool Swap;
-
     void QuickSort3Ways(int left, int right);
     void swap(int a, int b);
 
@@ -42,12 +42,15 @@ public:
     void PlayQuickSort();
     void GenerateSteps(int i);
 
-    static void msleep(unsigned long msecs){QThread::msleep(msecs);}   //Sleeper::msleep(10);
-    static void sleep(unsigned long secs){QThread::sleep(secs);}    //Sleeper::sleep(10);
+
+   // static void msleep(unsigned long msecs){QThread::msleep(msecs);}   //Sleeper::msleep(10);
+   // static void sleep(unsigned long secs){QThread::sleep(secs);}    //Sleeper::sleep(10);
 
 private:
     QColor color;
 
+public slots:
+    void PlayAlgorithm();
 };
 
 class QuickSortStep

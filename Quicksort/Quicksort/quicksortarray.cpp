@@ -184,7 +184,7 @@ void QuickSortArray::NextStep()
         for(int i=0;i<steps.at(currentStep)->Items.size();i++)
             Add(steps.at(currentStep)->Items.at(i));
 
-        this->renderArea->repaint();
+        this->renderArea->update();
         //this->msleep(100);
     }
 }
@@ -204,7 +204,7 @@ void QuickSortArray::PreviousStep()
         for(int i=0;i<steps.at(currentStep)->Items.size();i++)
             Add(steps.at(currentStep)->Items.at(i));
 
-        this->renderArea->repaint();
+        this->renderArea->update();
         //this->msleep(100);
 
     }
@@ -212,23 +212,21 @@ void QuickSortArray::PreviousStep()
 
 void QuickSortArray::PlayQuickSort()
 {
-    currentStep++;
-    while(currentStep<steps.size())
-    {
-        this->End=steps.at(currentStep)->End;
-        this->Begin=steps.at(currentStep)->Begin;
-        this->indexA=steps.at(currentStep)->LeftIndex;
-        this->indexB=steps.at(currentStep)->RightIndex;
-        this->pivotIndex=steps.at(currentStep)->PivotIndex;
-        this->Swap=steps.at(currentStep)->Swap;
-        this->items.clear();
-        for(int i=0;i<steps.at(currentStep)->Items.size();i++)
-            Add(steps.at(currentStep)->Items.at(i));
 
-        this->renderArea->repaint();
-        this->msleep(100);
-        currentStep++;
-    }
+    currentStep++;
+    this->End=steps.at(currentStep)->End;
+    this->Begin=steps.at(currentStep)->Begin;
+    this->indexA=steps.at(currentStep)->LeftIndex;
+    this->indexB=steps.at(currentStep)->RightIndex;
+    this->pivotIndex=steps.at(currentStep)->PivotIndex;
+    this->Swap=steps.at(currentStep)->Swap;
+
+    this->items.clear();
+    for(int i=0;i<steps.at(currentStep)->Items.size();i++)
+        Add(steps.at(currentStep)->Items.at(i));
+
+
+    //thread->msleep(50);
 }
 
 void QuickSortArray::GenerateSteps(int i)
@@ -248,7 +246,13 @@ void QuickSortArray::GenerateSteps(int i)
     for(int i=0;i<steps.at(currentStep)->Items.size();i++)
         Add(steps.at(currentStep)->Items.at(i));
 
-    this->renderArea->repaint();
+    this->renderArea->update();
 
+}
+
+void QuickSortArray::PlayAlgorithm()
+{
+    if((currentStep+1)<steps.size())
+        PlayQuickSort();
 }
 

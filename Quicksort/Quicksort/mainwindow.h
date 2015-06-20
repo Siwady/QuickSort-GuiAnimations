@@ -6,11 +6,13 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include <QTimer>
+#include <QTime>
 #include <time.h>
 #include <QLineEdit>
 #include "quicksortarray.h"
 #include <QTextEdit>
 
+class QuickSortArray;
 namespace Ui {
 class MainWindow;
 }
@@ -24,8 +26,10 @@ public:
     ~MainWindow();
     QStringList fields;
     void Fill();
-
+    QuickSortArray *QuickSort;
     QList<QTextEdit*> EditList;
+    bool play;
+    QTimer *timer;
 
 private slots:
     void on_OpenFile_triggered();
@@ -39,11 +43,13 @@ private slots:
 
     void on_pb_update_clicked();
 
+    void Play();
+
 private:
     Ui::MainWindow *ui;
-    QuickSortArray *QuickSort;
 
-    QTime *timer;
+
+    //QTime *timer;
 };
 
 #endif // MAINWINDOW_H
