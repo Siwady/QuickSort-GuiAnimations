@@ -1,7 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>Images/Arrow.png</file>
-        <file>Images/Pivot.png</file>
         <file>Images/Pivot2.png</file>
+        <file>Images/Open.png</file>
+        <file>Images/Save.png</file>
     </qresource>
 </RCC>

@@ -27,7 +27,7 @@ public:
     QStringList fields;
     void Fill();
     QuickSortArray *QuickSort;
-    QList<QTextEdit*> EditList;
+    QList<QLineEdit*> EditList;
     bool play;
     QTimer *timer;
 
@@ -44,6 +44,12 @@ private slots:
     void on_pb_update_clicked();
 
     void Play();
+
+    void on_SaveFile_triggered();
+
+    void on_pb_Add_clicked();
+
+    void on_pb_Delete_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -29,6 +29,7 @@ public:
     int indexA;
     int indexB;
     int pivotIndex;
+    int pivotIndex2;
     int End;
     int Begin;
     bool Swap;
@@ -41,6 +42,7 @@ public:
     void PreviousStep();
     void PlayQuickSort();
     void GenerateSteps(int i);
+    void QuickSortDualPivot(int left, int right);
 
 
    // static void msleep(unsigned long msecs){QThread::msleep(msecs);}   //Sleeper::msleep(10);
@@ -57,17 +59,18 @@ class QuickSortStep
 {
 public:
     QuickSortStep(){}
-    QuickSortStep(int begin,int end,int leftIndex,int rightIndex,int pivotIndex,bool swap,QList<int> items)
+    QuickSortStep(int begin,int end,int leftIndex,int rightIndex,int pivotIndex,int pivotIndex2,bool swap,QList<int> items)
     {
         this->Begin=begin;
         this->End=end;
         this->LeftIndex=leftIndex;
         this->RightIndex=rightIndex;
         this->PivotIndex=pivotIndex;
+        this->PivotIndex2=pivotIndex2;
         this->Items=items;
         this->Swap=swap;
     }
-    int LeftIndex, RightIndex,PivotIndex,Begin,End,Swap;
+    int LeftIndex, RightIndex,PivotIndex,Begin,End,Swap,PivotIndex2;
     QList<int> Items;
 
 };

@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->cb_algorithm->addItem("1. Quicksort 2 Ways Algorithm");
     ui->cb_algorithm->addItem("2. Quicksort 3 Ways Algorithm");
+    ui->cb_algorithm->addItem("3. Quicksort Dual Pivot Algorithm");
     play=false;
     this->timer=new QTimer(this);
     connect(this->timer,SIGNAL(timeout()),this,SLOT(Play()));
@@ -34,6 +35,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::Fill()
 {
+    QValidator *validator = new QIntValidator(0,999, this);
     for(int i=0;i<this->EditList.size();i++){
         ui->gridElements->removeWidget(this->EditList.at(i));
         delete this->EditList.at(i);
@@ -43,7 +45,8 @@ void MainWindow::Fill()
     //this->QuickSort->items.clear();
     for(int j=0;j<this->QuickSort->GetSize();j++)
     {
-        EditList.push_back(new QTextEdit(QString::number(this->QuickSort->Get(j)),this));
+        EditList.push_back(new QLineEdit(QString::number(this->QuickSort->Get(j)),this));
+        EditList.at(j)->setValidator(validator);
         //ui->gridElements->addWidget(EditList.at(j));
     }
     for(int j=0;j<this->EditList.size();j++)
@@ -74,6 +77,7 @@ void MainWindow::on_OpenFile_triggered()
        // this->QuickSort->renderArea->setArray(this->QuickSort);
         this->QuickSort->renderArea->setFocus();
         Fill();
+        ui->pb_generate->setEnabled(true);
     }
 
 
@@ -90,10 +94,14 @@ void MainWindow::on_bt_play_clicked()
         ui->bt_play->setText("Pause");
         play=true;
         this->timer->start(50);
+        ui->pb_nextStep->setEnabled(false);
+        ui->pb_previousStep->setEnabled(false);
     }else
     {
         ui->bt_play->setText("Play");
         play=false;
+        ui->pb_nextStep->setEnabled(true);
+        ui->pb_previousStep->setEnabled(true);
     }
     //this->QuickSort->PlayQuickSort();
     this->QuickSort->renderArea->update();
@@ -135,12 +143,13 @@ void MainWindow::on_pb_update_clicked()
     ui->pb_previousStep->setEnabled(false);
     for(int i=0;i<this->EditList.size();i++)
     {
-            this->QuickSort->Add(this->EditList.at(i)->toPlainText().toInt());
+            this->QuickSort->Add(this->EditList.at(i)->text().toInt());
     }
 
     this->QuickSort->indexA=this->QuickSort->indexB=this->QuickSort->pivotIndex=this->QuickSort->End=
             this->QuickSort->Begin=-1;
     this->QuickSort->renderArea->update();
+    ui->pb_generate->setEnabled(true);
 }
 
 void MainWindow::Play()
@@ -154,5 +163,48 @@ void MainWindow::Play()
             play=false;
         }
         timer->start(100);
+    }
+}
+
+void MainWindow::on_SaveFile_triggered()
+{
+    QString text="[";
+    for(int i=0;i<this->EditList.size();i++)
+    {
+        text.append(QString::number(this->EditList.at(i)->text().toInt()));
+        if(i==this->EditList.size()-1)
+            text.append("]");
+        else
+            text.append(",");
+    }
+    text.replace(" ","");
+    QString filename = QFileDialog::getSaveFileName(
+            this,
+            tr("Save Document"),
+            QDir::currentPath(),
+            tr("TextFile(*.txt)") );
+    if( !filename.isNull() )
+    {
+        QFile f(filename);
+        f.open(QIODevice::WriteOnly);
+        f.write(text.toLatin1());
+        f.close();
+    }
+}
+
+void MainWindow::on_pb_Add_clicked()
+{
+    this->EditList.push_back(new QLineEdit(""));
+    ui->gridElements->addWidget(EditList.at(EditList.size()-1));
+}
+
+void MainWindow::on_pb_Delete_clicked()
+{
+    for(int i=0;i<this->EditList.size();i++){
+        if(this->EditList.at(i)->text().isEmpty())
+        {
+               delete this->EditList.at(i);
+               this->EditList.removeAt(i);
+        }
     }
 }
