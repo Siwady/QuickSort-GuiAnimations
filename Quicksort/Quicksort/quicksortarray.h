@@ -44,6 +44,9 @@ public:
     void GenerateSteps(int i);
     void QuickSortDualPivot(int left, int right);
 
+    void InsertionSort();
+    void SelectionSort();
+    void BubbleSort();
 
    // static void msleep(unsigned long msecs){QThread::msleep(msecs);}   //Sleeper::msleep(10);
    // static void sleep(unsigned long secs){QThread::sleep(secs);}    //Sleeper::sleep(10);

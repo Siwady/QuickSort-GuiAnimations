@@ -18,7 +18,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->cb_algorithm->addItem("1. Quicksort 2 Ways Algorithm");
     ui->cb_algorithm->addItem("2. Quicksort 3 Ways Algorithm");
-    ui->cb_algorithm->addItem("3. Quicksort Dual Pivot Algorithm");
+    ui->cb_algorithm->addItem("3. Insertion Sort Algorithm");
+    ui->cb_algorithm->addItem("4. Selection Sort Algorithm");
+    ui->cb_algorithm->addItem("5. Bubble Sort Algorithm");
     play=false;
     this->timer=new QTimer(this);
     connect(this->timer,SIGNAL(timeout()),this,SLOT(Play()));
@@ -71,10 +73,9 @@ void MainWindow::on_OpenFile_triggered()
             {
                 this->QuickSort->Add(fields.at(i).toInt());
             }
-            qDebug()<<this->QuickSort->GetSize();
-            qDebug()<<this->QuickSort->Get(1);
+            //qDebug()<<this->QuickSort->GetSize();
+            //qDebug()<<this->QuickSort->Get(1);
         }
-       // this->QuickSort->renderArea->setArray(this->QuickSort);
         this->QuickSort->renderArea->setFocus();
         Fill();
         ui->pb_generate->setEnabled(true);
@@ -83,27 +84,35 @@ void MainWindow::on_OpenFile_triggered()
 
     file.close();
 
-
+    qDebug()<<QuickSort->items.size();
 }
 
 
 void MainWindow::on_bt_play_clicked()
 {
-    //this->QuickSort->QuickSort(0,this->QuickSort->items.size()-1);
     if(!play){
         ui->bt_play->setText("Pause");
         play=true;
         this->timer->start(50);
         ui->pb_nextStep->setEnabled(false);
         ui->pb_previousStep->setEnabled(false);
+        ui->pb_Add->setEnabled(false);
+        ui->pb_Delete->setEnabled(false);
+        ui->pb_generate->setEnabled(false);
+        ui->pb_update->setEnabled(false);
+        ui->cb_algorithm->setEnabled(false);
     }else
     {
         ui->bt_play->setText("Play");
         play=false;
         ui->pb_nextStep->setEnabled(true);
         ui->pb_previousStep->setEnabled(true);
+        ui->pb_Add->setEnabled(true);
+        ui->pb_Delete->setEnabled(true);
+        ui->pb_generate->setEnabled(true);
+        ui->pb_update->setEnabled(true);
+        ui->cb_algorithm->setEnabled(true);
     }
-    //this->QuickSort->PlayQuickSort();
     this->QuickSort->renderArea->update();
 
 }
@@ -117,7 +126,7 @@ void MainWindow::on_pb_generate_clicked()
     this->QuickSort->currentStep=0;
     this->QuickSort->steps.clear();
     this->QuickSort->GenerateSteps(ui->cb_algorithm->currentIndex());
-    qDebug()<<this->QuickSort->steps.size();
+    //qDebug()<<this->QuickSort->steps.size();
     ui->bt_play->setEnabled(true);
     ui->pb_nextStep->setEnabled(true);
     ui->pb_previousStep->setEnabled(true);
@@ -161,6 +170,13 @@ void MainWindow::Play()
         if(this->QuickSort->currentStep==this->QuickSort->steps.size()-1){
             ui->bt_play->setText("Play");
             play=false;
+            ui->pb_nextStep->setEnabled(true);
+            ui->pb_previousStep->setEnabled(true);
+            ui->pb_Add->setEnabled(true);
+            ui->pb_Delete->setEnabled(true);
+            ui->pb_generate->setEnabled(true);
+            ui->pb_update->setEnabled(true);
+            ui->cb_algorithm->setEnabled(true);
         }
         timer->start(100);
     }
