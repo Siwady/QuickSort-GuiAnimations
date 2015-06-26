@@ -110,6 +110,7 @@ void QuickSortArray::QuickSort(int left, int right) {
                     pivotIndex=i;
                 indexA=i;
                 indexB=j;
+                this->steps.push_back(new QuickSortStep(left,right,i,j,pivotIndex,-1,false,this->items));
                 temp = items[i];
                 items[i] = items[j];
                 items[j] = temp;
@@ -141,22 +142,24 @@ void QuickSortArray::QuickSort3Ways(int left, int right)
         {
             if(this->items.at(i)<pivot)
             {
+                this->steps.push_back(new QuickSortStep(left,right,l,i,pivotIndex,-1,false,this->items));
                 swap(i,l);
                 if(i==pivotIndex)
                     pivotIndex=l;
                 else if(l==pivotIndex)
                     pivotIndex=i;
-                this->steps.push_back(new QuickSortStep(left,right,l,r,pivotIndex,-1,true,this->items));
+                this->steps.push_back(new QuickSortStep(left,right,l,i,pivotIndex,-1,true,this->items));
                 i++;
                 l++;
             }else if(pivot<this->items.at(i))
             {
+                this->steps.push_back(new QuickSortStep(left,right,i,r,pivotIndex,-1,false,this->items));
                 swap(i,r);
                 if(i==pivotIndex)
                     pivotIndex=r;
                 else if(r==pivotIndex)
                     pivotIndex=i;
-                this->steps.push_back(new QuickSortStep(left,right,l,r,pivotIndex,-1,true,this->items));
+                this->steps.push_back(new QuickSortStep(left,right,i,r,pivotIndex,-1,true,this->items));
                 r--;
             }else{
                 this->steps.push_back(new QuickSortStep(left,right,l,r,pivotIndex,-1,false,this->items));
