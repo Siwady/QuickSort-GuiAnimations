@@ -11,10 +11,16 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>GUI Algorithm Animations</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="images.qrc">
+    <normaloff>:/Images/Icon.png</normaloff>:/Images/Icon.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QMainWindow{
+	background-color: rgb(251, 255, 248);
+}</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="gridLayoutWidget">
@@ -59,10 +65,10 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>510</y>
-      <width>111</width>
-      <height>41</height>
+      <x>200</x>
+      <y>505</y>
+      <width>50</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -73,11 +79,17 @@
     <property name="layoutDirection">
      <enum>Qt::LeftToRight</enum>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/Images/Previous.png);</string>
+    </property>
     <property name="text">
-     <string>Back Step</string>
+     <string/>
     </property>
     <property name="checkable">
      <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="bt_play">
@@ -88,7 +100,7 @@
      <rect>
       <x>410</x>
       <y>510</y>
-      <width>111</width>
+      <width>121</width>
       <height>41</height>
      </rect>
     </property>
@@ -113,25 +125,44 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>510</y>
-      <width>111</width>
-      <height>41</height>
+      <x>680</x>
+      <y>505</y>
+      <width>50</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <pointsize>16</pointsize>
+      <kerning>true</kerning>
      </font>
+    </property>
+    <property name="toolTip">
+     <string/>
     </property>
     <property name="layoutDirection">
      <enum>Qt::LeftToRight</enum>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/Images/Next.png);</string>
+    </property>
     <property name="text">
-     <string>Next Step</string>
+     <string/>
     </property>
     <property name="checkable">
      <bool>false</bool>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="pb_generate">
@@ -140,9 +171,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>660</x>
+      <x>650</x>
       <y>100</y>
-      <width>91</width>
+      <width>101</width>
       <height>23</height>
      </rect>
     </property>
@@ -152,15 +183,27 @@
     <property name="text">
      <string>Generate Steps</string>
     </property>
+    <property name="icon">
+     <iconset resource="images.qrc">
+      <normaloff>:/Images/Generate.png</normaloff>:/Images/Generate.png</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QComboBox" name="cb_algorithm">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>100</y>
-      <width>551</width>
+      <width>531</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">selection-background-color: rgb(187, 255, 176);
+selection-color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
     </property>
    </widget>
    <widget class="QGroupBox" name="horizontalGroupBox">
@@ -184,14 +227,21 @@
    <widget class="QPushButton" name="pb_update">
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>560</x>
       <y>100</y>
-      <width>75</width>
+      <width>81</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Set</string>
+     <string>Set/Update</string>
+    </property>
+    <property name="icon">
+     <iconset resource="images.qrc">
+      <normaloff>:/Images/Update.png</normaloff>:/Images/Update.png</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="pb_Add">
@@ -199,25 +249,39 @@
      <rect>
       <x>760</x>
       <y>100</y>
-      <width>61</width>
+      <width>51</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>Add</string>
     </property>
+    <property name="icon">
+     <iconset resource="images.qrc">
+      <normaloff>:/Images/Add.png</normaloff>:/Images/Add.png</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="pb_Delete">
     <property name="geometry">
      <rect>
-      <x>830</x>
+      <x>820</x>
       <y>100</y>
-      <width>61</width>
+      <width>71</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>Delete</string>
+    </property>
+    <property name="icon">
+     <iconset resource="images.qrc">
+      <normaloff>:/Images/Delete.png</normaloff>:/Images/Delete.png</iconset>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

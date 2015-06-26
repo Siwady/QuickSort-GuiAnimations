@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->QuickSort=new QuickSortArray();
     ui->gridLayout->addWidget(this->QuickSort->renderArea,0,0);
-
     ui->cb_algorithm->addItem("1. Quicksort 2 Ways Algorithm");
     ui->cb_algorithm->addItem("2. Quicksort 3 Ways Algorithm");
     ui->cb_algorithm->addItem("3. Insertion Sort Algorithm");
@@ -145,20 +144,22 @@ void MainWindow::on_pb_previousStep_clicked()
 
 void MainWindow::on_pb_update_clicked()
 {
-    this->QuickSort->items.clear();
-    ui->bt_play->setEnabled(false);
-    ui->bt_play->setText("Play");
-    ui->pb_nextStep->setEnabled(false);
-    ui->pb_previousStep->setEnabled(false);
-    for(int i=0;i<this->EditList.size();i++)
-    {
-            this->QuickSort->Add(this->EditList.at(i)->text().toInt());
-    }
+    if(EditList.size()!=0){
+        this->QuickSort->items.clear();
+        ui->bt_play->setEnabled(false);
+        ui->bt_play->setText("Play");
+        ui->pb_nextStep->setEnabled(false);
+        ui->pb_previousStep->setEnabled(false);
+        for(int i=0;i<this->EditList.size();i++)
+        {
+                this->QuickSort->Add(this->EditList.at(i)->text().toInt());
+        }
 
-    this->QuickSort->indexA=this->QuickSort->indexB=this->QuickSort->pivotIndex=this->QuickSort->End=
-            this->QuickSort->Begin=-1;
-    this->QuickSort->renderArea->update();
-    ui->pb_generate->setEnabled(true);
+        this->QuickSort->indexA=this->QuickSort->indexB=this->QuickSort->pivotIndex=this->QuickSort->End=
+                this->QuickSort->Begin=-1;
+        this->QuickSort->renderArea->update();
+        ui->pb_generate->setEnabled(true);
+    }
 }
 
 void MainWindow::Play()
@@ -223,4 +224,6 @@ void MainWindow::on_pb_Delete_clicked()
                this->EditList.removeAt(i);
         }
     }
+    //on_pb_update_clicked();
+
 }
